@@ -240,7 +240,6 @@
           (storedThread: Conversation) =>
             storedThread && storedThread.id === thread?.id,
         ) ?? (_this.thread as Conversation);
-
       // This is for Email component demo purpose, where we want to show expanded threads by default on load.
       if (_this.show_expanded_email_view_onload) {
         localThread.expanded = _this.show_expanded_email_view_onload;
@@ -358,13 +357,6 @@
         lastMsgIndex
       ].expanded;
 
-      if (!emailManuallyPassed) {
-        // fetch last message
-        if (!activeThread.messages[lastMsgIndex].body) {
-          fetchIndividualMessage(lastMsgIndex);
-        }
-      }
-
       //#region open thread + messages
 
       activeThread.expanded = !activeThread.expanded;
@@ -476,9 +468,6 @@
         message: activeThread.messages[msgIndex],
         thread: activeThread,
       });
-      if (!emailManuallyPassed && !activeThread.messages[msgIndex].body) {
-        fetchIndividualMessage(msgIndex);
-      }
     }
   }
 
@@ -1124,6 +1113,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            span {
+              display: none;
+            }
           }
           @keyframes rotate {
             to {
@@ -1320,6 +1312,9 @@
                             style="height:18px; animation: rotate 2s linear infinite; margin-right:10px;"
                           />
                           Loading...
+                          <span>
+                            {fetchIndividualMessage(msgIndex)}
+                          </span>
                         </div>
                       {/if}
                     </div>
