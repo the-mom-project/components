@@ -345,9 +345,13 @@ describe("Email component", () => {
         .then((element) => {
           const component = element[0];
           component.thread = { ...SAMPLE_THREAD, unread: false };
-          cy.get(component).find(".unread").should("not.exist");
-          component.thread = { ...component.thread, unread: true };
-          cy.get(component).find(".unread").should("exist");
+          cy.get(component)
+            .find(".unread")
+            .should("not.exist")
+            .then(() => {
+              component.thread = { ...component.thread, unread: true };
+              cy.get(component).find(".unread").should("exist");
+            });
         });
     });
     // test clicking
