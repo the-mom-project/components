@@ -240,6 +240,7 @@
           (storedThread: Conversation) =>
             storedThread && storedThread.id === thread?.id,
         ) ?? (_this.thread as Conversation);
+
       // This is for Email component demo purpose, where we want to show expanded threads by default on load.
       if (_this.show_expanded_email_view_onload) {
         localThread.expanded = _this.show_expanded_email_view_onload;
@@ -250,6 +251,11 @@
 
       if (_this.show_expanded_email_view_onload) {
         thread.expanded = _this.show_expanded_email_view_onload;
+        const lastMsgIndex = thread.messages.length - 1;
+        thread.messages[lastMsgIndex].body = await fetchIndividualMessage(
+          lastMsgIndex,
+          thread.messages[lastMsgIndex].id,
+        );
       }
       activeThread = thread as Conversation;
     }
@@ -356,6 +362,18 @@
       activeThread.messages[lastMsgIndex].expanded = !activeThread.messages[
         lastMsgIndex
       ].expanded;
+
+      if (!emailManuallyPassed) {
+        // fetch last message
+        if (!activeThread.messages[lastMsgIndex].body) {
+          activeThread.messages[
+            lastMsgIndex
+          ].body = await fetchIndividualMessage(
+            lastMsgIndex,
+            activeThread.messages[lastMsgIndex].id,
+          );
+        }
+      }
 
       //#region open thread + messages
 
@@ -468,6 +486,11 @@
         message: activeThread.messages[msgIndex],
         thread: activeThread,
       });
+      fetchIndividualMessage(msgIndex, activeThread.messages[msgIndex].id).then(
+        (res) => {
+          activeThread.messages[msgIndex].body = res;
+        },
+      );
     }
   }
 
@@ -484,13 +507,14 @@
     }
   }
 
-  function fetchIndividualMessage(msgIndex: number) {
-    const messageID = activeThread.messages[msgIndex].id;
-
+  function fetchIndividualMessage(
+    msgIndex: number,
+    messageID: string,
+  ): Promise<string | null> {
     messageLoadStatus[msgIndex] = "loading";
-    fetchMessage(query, messageID).then((json) => {
-      activeThread.messages[msgIndex].body = json.body;
+    return fetchMessage(query, messageID).then((json) => {
       messageLoadStatus[msgIndex] = "loaded";
+      return json.body;
     });
   }
 
@@ -1113,9 +1137,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            span {
-              display: none;
-            }
           }
           @keyframes rotate {
             to {
@@ -1312,9 +1333,6 @@
                             style="height:18px; animation: rotate 2s linear infinite; margin-right:10px;"
                           />
                           Loading...
-                          <span>
-                            {fetchIndividualMessage(msgIndex)}
-                          </span>
                         </div>
                       {/if}
                     </div>
