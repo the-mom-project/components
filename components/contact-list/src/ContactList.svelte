@@ -84,6 +84,8 @@
         hydratedContacts = $ContactStore[queryKey];
         status = "loaded";
       } else if (query.component_id) {
+        lastNumContactsLoaded = _this.contacts_to_load;
+        offset = 0;
         setContacts();
       }
     }
@@ -130,7 +132,7 @@
   let queryKey: string;
   $: queryKey = JSON.stringify(query);
 
-  $: setHydratedContacts(), contacts, queryKey;
+  $: setHydratedContacts(), contacts;
   async function setHydratedContacts() {
     status = "loading";
     if (contacts && Array.isArray(contacts)) {
