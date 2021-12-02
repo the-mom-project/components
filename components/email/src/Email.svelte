@@ -719,6 +719,7 @@
         padding: $spacing-xs;
         flex-wrap: wrap;
         display: grid;
+        gap: $spacing-xs;
         align-items: center;
         grid-template-columns: fit-content(350px) 1fr;
         .from-star {
@@ -732,11 +733,12 @@
           font-size: 14px;
           margin-top: $spacing-xs;
           flex-basis: 100%;
+          grid-column-start: span 3;
           .subject {
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-            max-width: 90vw;
+            max-width: inherit;
             display: block;
             word-break: keep-all;
           }
@@ -746,9 +748,27 @@
             overflow: hidden;
             white-space: nowrap;
             display: block;
-            max-width: 90vw;
+            max-width: inherit;
             color: var(--nylas-email-snippet-color, var(--grey));
             margin-top: 4px;
+          }
+          .attachment {
+            gap: 1rem;
+            display: flex;
+
+            button {
+              padding: 0.3rem 1rem;
+              border: 1px solid var(--grey);
+              border-radius: 30px;
+              background: white;
+              cursor: pointer;
+              &:hover {
+                background: var(--grey-light);
+              }
+            }
+            &.mobile {
+              display: flex;
+            }
           }
         }
 
@@ -874,7 +894,7 @@
               overflow: hidden;
               white-space: nowrap;
               display: block;
-              max-width: 90vw;
+              max-width: inherit;
               color: var(--nylas-email-snippet-color, var(--grey));
               margin-top: $spacing-xs;
             }
@@ -1007,6 +1027,11 @@
         .desktop-subject-snippet {
           display: none;
         }
+        .attachment {
+          &.desktop {
+            display: none;
+          }
+        }
         div {
           overflow: hidden;
           text-overflow: ellipsis;
@@ -1092,10 +1117,8 @@
           }
         }
         &.condensed {
-          padding: 0 $spacing-xs;
           display: grid;
           column-gap: $spacing-m;
-          // min-height: $collapsed-height;
           grid-template-columns: fit-content(350px) 1fr;
           padding: $spacing-xs 0;
           justify-content: initial;
@@ -1190,7 +1213,6 @@
             flex-direction: column;
             gap: $spacing-xs;
           }
-
           .attachment {
             gap: 1rem;
             display: flex;
@@ -1205,8 +1227,10 @@
                 background: var(--grey-light);
               }
             }
+            &.desktop {
+              display: flex;
+            }
           }
-
           .date {
             text-align: right;
           }
@@ -1518,7 +1542,7 @@
                   </span>
                 </div>
                 {#if Object.keys(attachedFiles).length > 0}
-                  <div class="attachment">
+                  <div class="attachment desktop">
                     {#each Object.values(attachedFiles) as files}
                       {#each files as file}
                         <button
@@ -1577,11 +1601,24 @@
             </div>
 
             <div class="mobile-subject-snippet">
-              <span class="subject">{thread?.subject}</span><span
-                class="snippet"
-              >
-                {thread.snippet}</span
-              >
+              <span class="subject">{thread?.subject}</span>
+              <span class="snippet">
+                {thread.snippet}
+              </span>
+              {#if Object.keys(attachedFiles).length > 0}
+                <div class="attachment mobile">
+                  {#each Object.values(attachedFiles) as files}
+                    {#each files as file}
+                      <button
+                        on:click|stopPropagation={(e) =>
+                          downloadSelectedFile(e, file)}
+                      >
+                        {file.filename || file.id}
+                      </button>
+                    {/each}
+                  {/each}
+                </div>
+              {/if}
             </div>
           </div>
         {/if}
