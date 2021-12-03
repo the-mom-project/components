@@ -13,7 +13,10 @@
         const titleInput = document.querySelector("input#title");
         const startTimeInput = document.querySelector("input#start-time");
         const endTimeInput = document.querySelector("input#end-time");
-
+        agenda.id =
+          window.navigator.appVersion === "cypress-testagent"
+            ? "test-agenda"
+            : "demo-agenda";
         let newEvent, save, cancel, update;
         agenda.event_created = (event, saveEvent, cancelEvent, updateEvent) => {
           saveEventModal.style.display = "block";
@@ -240,7 +243,7 @@
       }
 
       div.save-event {
-        display:none;
+        display: none;
         padding: 5px;
         position: fixed;
         z-index: 2;
@@ -252,8 +255,8 @@
         padding: 0.5rem;
         color: white;
       }
-      div.save-event>div{
-        display:flex;
+      div.save-event > div {
+        display: flex;
         flex-direction: row;
         justify-content: space-between;
       }
@@ -320,7 +323,6 @@
     </div>
 
     <nylas-agenda
-      id="demo-agenda"
       auto_time_box="false"
       allow_event_creation="true"
       allow_date_change="true"

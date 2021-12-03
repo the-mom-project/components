@@ -2,6 +2,9 @@ describe("Restricting Dates", () => {
   it("handles allowed_dates as an array of dates ", () => {
     cy.visit("/components/agenda/src/index.html");
     cy.get("nylas-agenda").should("exist");
+    cy.get("nylas-agenda")
+      .should("have.prop", "id")
+      .and("equal", "test-availability");
     cy.get("nylas-agenda").shadow().find("h2").should("exist");
     cy.get("nylas-agenda").invoke("attr", "header_type", "full");
     cy.get("nylas-agenda").invoke("attr", "allow_date_change", true);
@@ -44,6 +47,9 @@ describe("Restricting Dates", () => {
   it("handles allowed_dates as a comma-separated string ", () => {
     cy.visit("/components/agenda/src/index.html");
     cy.get("nylas-agenda").should("exist");
+    cy.get("nylas-agenda")
+      .should("have.prop", "id")
+      .and("equal", "test-availability");
     cy.get("nylas-agenda").shadow().find("h2").should("exist");
     cy.get("nylas-agenda").invoke("attr", "header_type", "full");
     cy.get("nylas-agenda").invoke("attr", "allow_date_change", true);
@@ -85,6 +91,9 @@ describe("Custom data", () => {
   it("Toggles between custom and Nylas data", () => {
     cy.visit("/components/agenda/src/index.html");
     cy.get("nylas-agenda").should("exist");
+    cy.get("nylas-agenda")
+      .should("have.prop", "id")
+      .and("equal", "test-agenda");
     cy.get("nylas-agenda").then((element) => {
       const agenda = element[0];
 

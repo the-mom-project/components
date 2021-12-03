@@ -2,6 +2,9 @@ describe("schedule-editor component", () => {
   it("Renders", () => {
     cy.visit("/components/schedule-editor/src/index.html");
     cy.get("nylas-schedule-editor").should("exist");
+    cy.get("nylas-scheduler-editor")
+      .should("have.prop", "id")
+      .and("equal", "test-scheduler-editor");
   });
 
   describe("Allows for multiple meetings", () => {

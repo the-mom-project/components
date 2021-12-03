@@ -6,6 +6,9 @@ describe("availability component", () => {
     });
 
     cy.visit("/components/availability/src/index.html");
+    cy.get("nylas-availability")
+      .should("have.prop", "id")
+      .and("equal", "test-availability");
   });
 
   describe("available times", () => {

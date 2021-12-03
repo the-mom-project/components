@@ -2,6 +2,9 @@ describe("scheduler component", () => {
   it("Renders", () => {
     cy.visit("/components/scheduler/src/index.html");
     cy.get("nylas-scheduler").should("exist");
+    cy.get("nylas-scheduler")
+      .should("have.prop", "id")
+      .and("equal", "test-scheduler");
   });
 
   const slots_to_book = [
