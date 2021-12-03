@@ -4,7 +4,7 @@ describe("Restricting Dates", () => {
     cy.get("nylas-agenda").should("exist");
     cy.get("nylas-agenda")
       .should("have.prop", "id")
-      .and("equal", "test-availability");
+      .and("equal", "test-agenda");
     cy.get("nylas-agenda").shadow().find("h2").should("exist");
     cy.get("nylas-agenda").invoke("attr", "header_type", "full");
     cy.get("nylas-agenda").invoke("attr", "allow_date_change", true);
@@ -49,7 +49,7 @@ describe("Restricting Dates", () => {
     cy.get("nylas-agenda").should("exist");
     cy.get("nylas-agenda")
       .should("have.prop", "id")
-      .and("equal", "test-availability");
+      .and("equal", "test-agenda");
     cy.get("nylas-agenda").shadow().find("h2").should("exist");
     cy.get("nylas-agenda").invoke("attr", "header_type", "full");
     cy.get("nylas-agenda").invoke("attr", "allow_date_change", true);
