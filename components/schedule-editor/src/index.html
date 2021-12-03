@@ -16,6 +16,10 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const component = document.querySelector("nylas-schedule-editor");
+        component.id =
+          window.navigator.appVersion === "cypress-testagent"
+            ? "test-scheduler-editor"
+            : "demo-scheduler-editor";
         component.participants = ["nylascypresstest@gmail.com"];
       });
     </script>
@@ -23,7 +27,7 @@
 
   <body>
     <main>
-      <nylas-schedule-editor id="demo-schedule-editor"></nylas-schedule-editor>
+      <nylas-schedule-editor></nylas-schedule-editor>
     </main>
   </body>
 </html>

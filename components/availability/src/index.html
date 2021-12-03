@@ -15,7 +15,10 @@
         const overbookedThresholdInput = document.querySelector(
           "input#overbooked-threshold",
         );
-
+        component.id =
+          window.navigator.appVersion === "cypress-testagent"
+            ? "test-availability"
+            : "demo-availability";
         const calendars = [
           {
             availability: "busy",
@@ -671,11 +674,7 @@
 
     <main>
       <div class="demo-box">
-        <nylas-availability
-          allow_booking="true"
-          max_bookable_slots="8"
-          id="demo-availability"
-        >
+        <nylas-availability allow_booking="true" max_bookable_slots="8">
         </nylas-availability>
       </div>
     </main>
