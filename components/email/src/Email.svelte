@@ -761,6 +761,7 @@
           .attachment {
             gap: 1rem;
             display: flex;
+            overflow-x: scroll;
 
             button {
               padding: 0.3rem 1rem;
@@ -1222,6 +1223,7 @@
           .attachment {
             gap: 1rem;
             display: flex;
+            overflow-x: scroll;
 
             button {
               padding: 0.3rem 1rem;
