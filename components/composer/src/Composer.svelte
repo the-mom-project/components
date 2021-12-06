@@ -510,6 +510,14 @@
       background: var(--composer-background-muted-color, #f0f2ff);
     }
   }
+  .composer-btn.file-upload {
+    margin-right: 10px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   .cc-btn {
     position: absolute;
@@ -579,9 +587,6 @@
   }
   .MinimizeIcon {
     transform: translateY(4px);
-  }
-  .AttachmentIcon {
-    margin-right: 15px;
   }
 </style>
 
@@ -747,13 +752,9 @@
       </main>
       <footer>
         {#if _this.show_attachment_button && (id || uploadFile)}
-          <button
-            class="composer-btn file-upload"
-            style="margin-right: 10px; width: 32px; height: 32px;"
-            on:click={() => fileSelector.click()}
-          >
+          <label for="file-upload" class="composer-btn file-upload">
             <AttachmentIcon class="AttachmentIcon" />
-          </button>
+          </label>
         {/if}
         <div class="btn-group">
           <button class="send-btn" on:click={handleSend} disabled={!isSendable}>
@@ -776,7 +777,7 @@
             type="file"
             name=""
             bind:this={fileSelector}
-            id=""
+            id="file-upload"
             on:change={handleFilesChange}
           />
         </form>
