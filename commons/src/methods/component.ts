@@ -102,20 +102,10 @@ export function parseBoolean(
   return (<any>[true, "true", "1"]).includes(val);
 }
 
-export default function parseStringToArray(parseStr: string) {
+export default function parseStringToArray(parseStr: string): string[] {
   if (!parseStr) {
     return [];
   }
 
-  if (parseStr.includes(",")) {
-    return parseStr.split(",").map((s: string) => s.trim());
-  }
-  if (parseStr.includes(" ")) {
-    return parseStr.split(" ").map((s: string) => s.trim());
-  }
-  if (parseStr.includes("\n")) {
-    return parseStr.split("\n").map((s: string) => s.trim());
-  }
-
-  return [parseStr.trim()];
+  return parseStr.split(",|s+|\n").map((s: string) => s.trim());
 }

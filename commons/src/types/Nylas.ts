@@ -137,7 +137,7 @@ export interface MiddlewareResponse<T = unknown> {
 
 export interface NError {
   name?: string;
-  message?: Error;
+  message?: Error | string;
 }
 
 export interface Manifest {
